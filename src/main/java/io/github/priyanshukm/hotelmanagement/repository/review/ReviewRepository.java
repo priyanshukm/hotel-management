@@ -16,7 +16,7 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
     /**
      *
      * @param userName of the user for which reviews are to be fetched
-     * @return
+     * @return List<Review>
      */
     List<Review> findByUserName(String userName);
 }

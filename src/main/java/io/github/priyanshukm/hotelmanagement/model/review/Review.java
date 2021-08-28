@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
@@ -17,9 +18,12 @@ public class Review {
     private Long id;
 
     @Indexed
+    @Field("username")
     private String userName;
 
+    @Field("score")
     private Long score;
 
+    @Field("data")
     private List<String> data;
 }
