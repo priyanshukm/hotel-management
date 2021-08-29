@@ -1,5 +1,6 @@
 package io.github.priyanshukm.hotelmanagement.service.review;
 
+import io.github.priyanshukm.hotelmanagement.exception.ReviewNotFoundException;
 import io.github.priyanshukm.hotelmanagement.model.review.Review;
 import io.github.priyanshukm.hotelmanagement.repository.review.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,23 @@ public class ReviewService {
         reviewRepository.delete(review);
     }
 
-    public Optional<Review> findReviewById(Long reviewId) {
-        return reviewRepository.findById(reviewId);
+    public Review findReviewById(Long reviewId) throws ReviewNotFoundException {
+        Optional<Review> review = reviewRepository.findById(reviewId);
+
+        if (review.isEmpty()) {
+            throw new ReviewNotFoundException("No review found for reviewId=" + reviewId);
+        }
+
+        return review.get();
     }
 
-    public List<Review> findReviewByUserName(String userName) {
-        return reviewRepository.findByUserName(userName);
+    public List<Review> findReviewByUserName(String userName) throws ReviewNotFoundException {
+        List<Review> reviews = reviewRepository.findByUserName(userName);
+
+        if (reviews.size() == 0) {
+            throw new ReviewNotFoundException("No review found for user=" + userName);
+        }
+
+        return reviews;
     }
 }
